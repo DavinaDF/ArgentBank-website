@@ -1,10 +1,18 @@
-import logo from "../img/argentBankLogo.png";
+import { NavLink } from "react-router-dom";
+import logo from "../assets/img/argentBankLogo.png";
 
 const Header = () => {
   return (
-    <div>
-      <h1>Ici se trouve le header</h1>
-      <img src={logo} alt="Logo Argent Bank header" />
+    <div className="main-nav">
+      <NavLink to="/" className="main-nav-logo">
+        <img src={logo} alt="Logo Argent Bank header" />
+      </NavLink>
+      <div className="main-nav-item">
+        <NavLink to="/signin">
+          <i className="fa fa-user-circle"></i>
+          Sign in
+        </NavLink>
+      </div>
     </div>
   );
 };
