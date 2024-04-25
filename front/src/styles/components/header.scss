@@ -1,0 +1,31 @@
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+
+    a {
+        font-weight: bold;
+        color: $color-text;
+    }
+    a.router-link-exact-active {
+        color: $color-highlight;
+    }
+    &-item {
+        text-decoration: none;
+        margin-right: 0.5rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
+      }
+      &-logo {
+        display: flex;
+        align-items: center;
+
+        img {
+            max-width: 100%;
+            width: 200px;
+        }
+      }
+  }
