@@ -7,7 +7,7 @@ const Home = () => {
   const features = featuresData.features;
 
   return (
-    <div>
+    <div className="main">
       <Banner />
       <section className="features">
         <h2 className="sr-only">Features</h2>

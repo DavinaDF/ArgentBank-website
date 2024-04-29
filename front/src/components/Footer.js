@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <div>
-      <h2>Je suis le footer</h2>
+    <div className="footer">
+      <p className="footer-text">Copyright 2020 Argent Bank</p>
     </div>
   );
 };
