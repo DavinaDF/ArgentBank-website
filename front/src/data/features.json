@@ -8,13 +8,13 @@
       },
       {
         "alt":"Money icon",
-        "image": "../assets/img/icon-1.png",
+        "image": "./icon-money.png",
         "paragraph": "The more you save with us, the higher your interest rate will be!",
         "title": "More savings means higher rates"
       },
       {
         "alt":"Security icon",
-        "image": "./assets/img/icon-security.png",
+        "image": "./icon-security.png",
         "paragraph": "We use top of the line encryption to make sure your data and money is always safe.",
         "title": "Security you can trust"
       }
