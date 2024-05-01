@@ -2,6 +2,10 @@
     flex: 1;
     padding: 2.5rem;
 
+    @media (min-width: 920px) {
+      flex-direction: row;
+    }
+
     &-icon {
         width: 100px;
         border: 10px solid #00bc77;

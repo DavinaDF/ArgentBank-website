@@ -4,7 +4,6 @@ import featuresData from "../data/features.json";
 
 const Home = () => {
   const featuresArray = featuresData.features;
-  console.log(featuresArray[0].image);
 
   return (
     <div className="main">
