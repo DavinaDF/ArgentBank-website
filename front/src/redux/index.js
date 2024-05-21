@@ -1,24 +1,42 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-const logSlice = createSlice({
-  name: "Log",
+// Création d'une section du store liée aux users
+const userSlice = createSlice({
+  name: "User",
   initialState: {
-    status: "out",
-    token: "",
-    userName: "",
+    isAuthentificated: false,
+    token: null,
+    userProfile: {
+      userFirstName: null,
+      userLastName: null,
+      userName: null,
+      userEmail: null,
+    },
   },
   reducers: {
     // Toutes les fonctions qui vont agir sur le user : connexion, déconnexion, stockage données
-    // action : {type: '', playload: tout ce qu'on veut}
+    // action : {type: '', payload: tout ce qu'on veut}
     logIn: (state, action) => {
-      state.status = action.payload;
+      state.isAuthentificated = true;
+      state.token = action.payload;
     },
-    logOut: (state, action) => {},
+    logOut: (state) => {
+      state.isAuthentificated = false;
+      state.token = null;
+      state.userProfile = null;
+    },
+    getProfile: (state, action) => {
+      state.userProfile = action.payload;
+    },
   },
 });
 
+export default userSlice;
+
 export const mainStore = configureStore({
   reducer: {
-    Log: logSlice.reducer,
+    User: userSlice.reducer,
   },
+  // middleware: getDefaultMiddleware(),
+  devTools: true,
 });
