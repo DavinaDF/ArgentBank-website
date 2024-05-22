@@ -8,11 +8,11 @@ const Dashboard = () => {
 
   return (
     <div className="main main-dashboard">
-      <div class="header">
+      <div className="header">
         <h1>
           Welcome back
           <br />
-          {userData.userName}
+          {userData.userProfile.userName}
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>

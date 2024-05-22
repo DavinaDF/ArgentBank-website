@@ -1,17 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/img/argentBankLogo.png";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
-  console.log("ok header");
   const userData = useSelector((state) => state.User);
   const isAuth = userData.isAuthentificated;
-  console.log(isAuth);
+  const userName = userData.userProfile.userName;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    dispatch({
+      type: "User/logOut",
+    });
+    navigate("/");
+  };
 
   return (
     <div className="main-nav">
-      {!isAuth && (
+      {!isAuth && !userName && (
         <section className="header-logout">
           <NavLink to="/" className="main-nav-logo">
             <img src={logo} alt="Logo Argent Bank header" />
@@ -24,16 +33,26 @@ const Header = () => {
           </div>
         </section>
       )}
-      {isAuth && (
+      {isAuth && userName && (
         <section className="header-login">
+          <NavLink to="/" className="main-nav-logo">
+            <img src={logo} alt="Logo Argent Bank header" />
+          </NavLink>
           <NavLink className="main-nav-item" to="/dashboard">
             <i className="fa fa-user-circle"></i>
-            Tony
+            {userName}
           </NavLink>
-          <NavLink className="main-nav-item" to="/dashboard">
+          <section
+            onClick={(e) => {
+              e.preventDefault();
+              handleLogOut();
+            }}
+            className="main-nav-item"
+            to="/"
+          >
             <i className="fa fa-sign-out"></i>
             Sign Out
-          </NavLink>
+          </section>
         </section>
       )}
     </div>

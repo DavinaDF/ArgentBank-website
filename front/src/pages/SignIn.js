@@ -20,8 +20,8 @@ const SignIn = () => {
   const handleLogin = async () => {
     try {
       // Fonction pour api connexion avec mail et mdp
-      const userData = await logInUser(email, password);
-      const userToken = userData.body.token;
+      const userDataLog = await logInUser(email, password);
+      const userToken = userDataLog.body.token;
       dispatch({
         type: "User/logIn",
         payload: userToken,
@@ -33,8 +33,16 @@ const SignIn = () => {
       console.log(userLogged);
 
       // Récupération des infos de l'utilisateur
-      const userProfile = await getUserProfile(userToken);
+      const userDataProfile = await getUserProfile(userToken);
+      const userProfile = {};
+      userProfile.userFirstName = userDataProfile.body.firstName;
+      userProfile.userLastName = userDataProfile.body.lastName;
+      userProfile.userName = userDataProfile.body.userName;
       console.log(userProfile);
+      dispatch({
+        type: "User/setProfile",
+        payload: userProfile,
+      });
       navigate("/dashboard");
     } catch (error) {
       setError("Les identifiants sont incorrects.");
