@@ -20,3 +20,16 @@ export async function getUserProfile(token) {
   });
   return response.json();
 }
+
+// fonction de modification du Username
+export async function editUsername(userNameEdited, token) {
+  const response = await fetch("http://localhost:3001/api/v1/user/profile", {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userName: userNameEdited }),
+  });
+  return response.json();
+}

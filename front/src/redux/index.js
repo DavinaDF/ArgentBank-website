@@ -26,8 +26,11 @@ const userSlice = createSlice({
       state.userProfile.userLastName = null;
       state.userProfile.userName = null;
     },
-    setProfile: (state, action) => {
+    getProfile: (state, action) => {
       state.userProfile = action.payload;
+    },
+    editProfile: (state, action) => {
+      state.userProfile.userName = action.payload;
     },
   },
 });

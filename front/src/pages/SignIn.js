@@ -40,7 +40,7 @@ const SignIn = () => {
       userProfile.userName = userDataProfile.body.userName;
       console.log(userProfile);
       dispatch({
-        type: "User/setProfile",
+        type: "User/getProfile",
         payload: userProfile,
       });
       navigate("/dashboard");
