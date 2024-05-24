@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userSlice from ".";
@@ -15,13 +15,12 @@ export const mainStore = configureStore({
   reducer: {
     User: persistedReducer,
   },
-  // middleware: [
-  //   (mainStore) => (next) => (action) => {
-  //     console.log("Action", action);
-  //     next(action);
-  //   },
-  // ],
-  // middleware: getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
   devTools: true,
 });
 

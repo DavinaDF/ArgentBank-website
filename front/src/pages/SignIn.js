@@ -97,13 +97,6 @@ const SignIn = () => {
             </label>
           </div>
           <button className="sign-in-button">Sign In</button>
-          {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-          {/* <a href="./dashboard" class="sign-in-button">
-            Sign In
-          </a> */}
-          {/* <!-- SHOULD BE THE BUTTON BELOW -->
-          <!-- <button class="sign-in-button">Sign In</button> -->
-          <!--  --> */}
         </form>
       </section>
     </div>

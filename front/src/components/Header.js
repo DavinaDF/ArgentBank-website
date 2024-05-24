@@ -12,6 +12,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
+    localStorage.removeItem("token");
     dispatch({
       type: "User/logOut",
     });
@@ -19,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <div>
       {!isAuth && !userName && (
         <div className="main-nav">
           <section className="header-logout">
@@ -35,7 +36,7 @@ const Header = () => {
           </section>
         </div>
       )}
-      {isAuth && userName && (
+      {isAuth && (
         <div className="main-nav">
           <section className="header-login">
             <div>
@@ -66,7 +67,7 @@ const Header = () => {
           </section>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
