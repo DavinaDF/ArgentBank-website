@@ -46,50 +46,46 @@ const EditInfo = () => {
         <form>
           {error && <p className="error">{error}</p>}
           <div className="edit-input-wrapper">
-            <label>
-              User name:
-              <input
-                type="text"
-                id="userName"
-                value={userNameEdited}
-                onChange={(e) => {
-                  e.preventDefault();
-                  handleChange(e);
-                }}
-                required
-              />
-            </label>
+            <label>User name:</label>
+            <input
+              type="text"
+              id="userName"
+              value={userNameEdited}
+              onChange={(e) => {
+                e.preventDefault();
+                handleChange(e);
+              }}
+              required
+            />
           </div>
           <div className="edit-input-wrapper">
-            <label>
-              First name:
-              <input type="text" id="firstName" value={firstName} disabled />
-            </label>
+            <label>First name:</label>
+            <input type="text" id="firstName" value={firstName} disabled />
           </div>
           <div className="edit-input-wrapper">
-            <label>
-              Last name:
-              <input type="text" id="lastName" value={lastName} disabled />
-            </label>
+            <label>Last name:</label>
+            <input type="text" id="lastName" value={lastName} disabled />
           </div>
-          <button
-            className="button-save"
-            onClick={(e) => {
-              e.preventDefault();
-              handleSave(e);
-            }}
-          >
-            Save
-          </button>
-          <button
-            className="button-cancel"
-            onClick={(e) => {
-              e.preventDefault();
-              handleCancel(e);
-            }}
-          >
-            Cancel
-          </button>
+          <div className="buttons">
+            <button
+              className="edit-button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSave(e);
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="edit-button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleCancel(e);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </section>
     </div>

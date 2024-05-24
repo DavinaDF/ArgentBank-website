@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 // Création d'une section du store liée aux users
 const userSlice = createSlice({
@@ -35,12 +35,6 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice;
+export const { logIn, logOut, getProfile, editProfile } = userSlice.actions;
 
-export const mainStore = configureStore({
-  reducer: {
-    User: userSlice.reducer,
-  },
-  // middleware: getDefaultMiddleware(),
-  devTools: true,
-});
+export default userSlice;

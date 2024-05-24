@@ -1,9 +1,23 @@
 .main-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     padding: 5px 20px;
+
+    .header-login {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .header-logout {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .header-right {
+        display: flex;
+        gap: 30px;
+    }
 
     a {
         font-weight: bold;

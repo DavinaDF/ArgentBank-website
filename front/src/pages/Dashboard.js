@@ -1,68 +1,139 @@
 import EditInfo from "../components/EditInfo";
 import AccountPreview from "../components/AccountPreview";
+import accounts from "../data/accounts.json";
+import { editUsername } from "../fetch/api";
 import { useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Dashboard = () => {
-  // Pour faire apparaître le formulaire
-  const [isVisible, setIsVisible] = useState(true);
-  const [formVisible, setFormVisible] = useState(false);
+  const dispatch = useDispatch();
 
+  // Récupération du state
   const userData = useSelector((state) => state.User);
   console.log(userData);
 
-  const handleDisplayEditForme = () => {
+  // On met la liste des comptes dans un tableau
+  const listAccount = accounts.accounts;
+
+  // Pour faire apparaître le formulaire
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [formVisible, setFormVisible] = useState(false);
+  // State champ formulaire
+  const [userNameEdited, setUserName] = useState(userData.userProfile.userName);
+  const [error, setError] = useState("");
+
+  // Apparition formulaire edit
+  const handleDisplayEditForm = () => {
     setFormVisible(!formVisible);
-    setIsVisible(!isVisible);
+    setHeaderVisible(!headerVisible);
+  };
+
+  const handleChange = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const handleSave = (e) => {
+    setUserName(e.target.value);
+
+    try {
+      const responseEditUserName = editUsername(userNameEdited, userData.token);
+      console.log(responseEditUserName);
+      dispatch({
+        type: "User/editProfile",
+        payload: userNameEdited,
+      });
+      handleDisplayEditForm();
+    } catch (error) {
+      setError("Votre pseudo n'a pas pu être modifié.");
+    }
+  };
+
+  const handleCancel = () => {
+    handleDisplayEditForm();
+    // navigate("/dashboard");
   };
 
   return (
     <div className="main main-dashboard">
-      <div className={`header ${isVisible ? "show" : ""}`}>
+      <div className={`header-dashboard ${headerVisible ? "" : "hide"}`}>
         <h1>
           Welcome back
           <br />
           {userData.userProfile.userName}
         </h1>
-        <button className="edit-button" onClick={handleDisplayEditForme}>
+        <button className="edit-button" onClick={handleDisplayEditForm}>
           Edit Name
         </button>
       </div>
-      <div className={`edit-content ${formVisible ? "animate" : ""}`}>
-        <EditInfo />
+      <div className={`edit-content ${formVisible ? "show" : ""}`}>
+        <section className="edit-form">
+          <h1>Edit user info</h1>
+          <form>
+            {error && <p className="error">{error}</p>}
+            <div className="edit-input-wrapper">
+              <label>User name:</label>
+              <input
+                type="text"
+                id="userName"
+                value={userNameEdited}
+                onChange={(e) => {
+                  e.preventDefault();
+                  handleChange(e);
+                }}
+                required
+              />
+            </div>
+            <div className="edit-input-wrapper">
+              <label>First name:</label>
+              <input
+                type="text"
+                id="firstName"
+                value={userData.userProfile.userFirstName}
+                disabled
+              />
+            </div>
+            <div className="edit-input-wrapper">
+              <label>Last name:</label>
+              <input
+                type="text"
+                id="lastName"
+                value={userData.userProfile.userLastName}
+                disabled
+              />
+            </div>
+            <div className="buttons">
+              <button
+                className="edit-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSave(e);
+                }}
+              >
+                Save
+              </button>
+              <button
+                className="edit-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCancel(e);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
       </div>
       <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+      {listAccount.map((account, index) => (
+        <AccountPreview
+          key={index}
+          title={account.title}
+          amount={account.amount}
+          description={account.description}
+        />
+      ))}
     </div>
   );
 };

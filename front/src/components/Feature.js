@@ -1,7 +1,4 @@
 import { PropTypes } from "prop-types";
-import iconImage0 from "../assets/img/icon-0.png";
-import iconImage1 from "../assets/img/icon-1.png";
-import iconImage2 from "../assets/img/icon-2.png";
 
 const Feature = ({ title, alt, image, paragraph }) => {
   return (

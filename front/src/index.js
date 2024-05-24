@@ -5,7 +5,7 @@ import "./styles/index.scss";
 
 // Redux
 import { Provider } from "react-redux";
-import { mainStore } from "./redux/index";
+import { mainStore } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

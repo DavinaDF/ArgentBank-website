@@ -19,43 +19,54 @@ const Header = () => {
   };
 
   return (
-    <div className="main-nav">
+    <>
       {!isAuth && !userName && (
-        <section className="header-logout">
-          <NavLink to="/" className="main-nav-logo">
-            <img src={logo} alt="Logo Argent Bank header" />
-          </NavLink>
-          <div className="main-nav-item">
-            <NavLink to="/signin">
-              <i className="fa fa-user-circle"></i>
-              Sign in
+        <div className="main-nav">
+          <section className="header-logout">
+            <NavLink to="/" className="main-nav-logo">
+              <img src={logo} alt="Logo Argent Bank header" />
             </NavLink>
-          </div>
-        </section>
+            <div className="main-nav-item">
+              <NavLink to="/signin">
+                <i className="fa fa-user-circle"></i>
+                Sign in
+              </NavLink>
+            </div>
+          </section>
+        </div>
       )}
       {isAuth && userName && (
-        <section className="header-login">
-          <NavLink to="/" className="main-nav-logo">
-            <img src={logo} alt="Logo Argent Bank header" />
-          </NavLink>
-          <NavLink className="main-nav-item" to="/dashboard">
-            <i className="fa fa-user-circle"></i>
-            {userName}
-          </NavLink>
-          <section
-            onClick={(e) => {
-              e.preventDefault();
-              handleLogOut();
-            }}
-            className="main-nav-item"
-            to="/"
-          >
-            <i className="fa fa-sign-out"></i>
-            Sign Out
+        <div className="main-nav">
+          <section className="header-login">
+            <div>
+              <NavLink to="/" className="main-nav-logo">
+                <img src={logo} alt="Logo Argent Bank header" />
+              </NavLink>
+            </div>
+            <section className="header-right">
+              <div>
+                <NavLink className="main-nav-item" to="/dashboard">
+                  <i className="fa fa-user-circle"></i>
+                  {userName}
+                </NavLink>
+              </div>
+
+              <div
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLogOut();
+                }}
+                className="main-nav-item"
+                to="/"
+              >
+                <i className="fa fa-sign-out"></i>
+                Sign Out
+              </div>
+            </section>
           </section>
-        </section>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
