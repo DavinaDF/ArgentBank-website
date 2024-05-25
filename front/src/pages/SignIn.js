@@ -4,6 +4,7 @@ import { logInUser, getUserProfile } from "../fetch/api";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
+import { logIn } from "../redux/userSlice";
 
 const SignIn = () => {
   // Variables du formulaire
@@ -15,38 +16,31 @@ const SignIn = () => {
 
   // State redux
   const dispatch = useDispatch();
-  const userLogged = useSelector((state) => state.User);
+  const userLogged = useSelector((state) => state.user);
 
-  const handleLogin = async () => {
-    try {
-      // Fonction pour api connexion avec mail et mdp
-      const userDataLog = await logInUser(email, password);
-      const userToken = userDataLog.body.token;
-      dispatch({
-        type: "User/logIn",
-        payload: userToken,
-      });
-      if (remenberMe) {
-        localStorage.setItem("token", userToken);
-      }
+  // if (userLogged.isAuthentificated) {
+  // if (remenberMe) {
+  //   localStorage.setItem("token", userLogged.token);
+  // }
+  //   dispatch(getProfile())
+  //   navigate("/dashboard")
+  // }
 
-      console.log(userLogged);
+  const handleLogin = () => {
+    dispatch(logIn({ email, password }));
 
-      // Récupération des infos de l'utilisateur
-      const userDataProfile = await getUserProfile(userToken);
-      const userProfile = {};
-      userProfile.userFirstName = userDataProfile.body.firstName;
-      userProfile.userLastName = userDataProfile.body.lastName;
-      userProfile.userName = userDataProfile.body.userName;
-      console.log(userProfile);
-      dispatch({
-        type: "User/getProfile",
-        payload: userProfile,
-      });
-      navigate("/dashboard");
-    } catch (error) {
-      setError("Les identifiants sont incorrects.");
-    }
+    // // Récupération des infos de l'utilisateur
+    // const userDataProfile = await getUserProfile(userToken);
+    // const userProfile = {};
+    // userProfile.userFirstName = userDataProfile.body.firstName;
+    // userProfile.userLastName = userDataProfile.body.lastName;
+    // userProfile.userName = userDataProfile.body.userName;
+    // console.log(userProfile);
+    // dispatch({
+    //   type: "user/getProfile",
+    //   payload: userProfile,
+    // });
+    // navigate("/dashboard");
   };
 
   return (

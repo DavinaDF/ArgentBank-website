@@ -1,4 +1,3 @@
-import EditInfo from "../components/EditInfo";
 import AccountPreview from "../components/AccountPreview";
 import accounts from "../data/accounts.json";
 import { editUsername } from "../fetch/api";
@@ -10,7 +9,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   // Récupération du state
-  const userData = useSelector((state) => state.User);
+  const userData = useSelector((state) => state.user);
   console.log(userData);
 
   // On met la liste des comptes dans un tableau
@@ -40,7 +39,7 @@ const Dashboard = () => {
       const responseEditUserName = editUsername(userNameEdited, userData.token);
       console.log(responseEditUserName);
       dispatch({
-        type: "User/editProfile",
+        type: "user/editProfile",
         payload: userNameEdited,
       });
       handleDisplayEditForm();

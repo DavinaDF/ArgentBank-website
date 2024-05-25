@@ -5,12 +5,11 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = useSelector((state) => state.User);
+  const user = useSelector((state) => state.user);
   console.log(user);
-  // const dispatch = useDispatch();
 
   return (
     <BrowserRouter>

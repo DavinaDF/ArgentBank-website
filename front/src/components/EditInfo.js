@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 const EditInfo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.User);
+  const userData = useSelector((state) => state.user);
   const userName = userData.userProfile.userName;
   const firstName = userData.userProfile.userFirstName;
   const lastName = userData.userProfile.userLastName;

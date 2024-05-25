@@ -4,7 +4,7 @@ import logo from "../assets/img/argentBankLogo.png";
 import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
-  const userData = useSelector((state) => state.User);
+  const userData = useSelector((state) => state.user);
   const isAuth = userData.isAuthentificated;
   const userName = userData.userProfile.userName;
 
@@ -14,7 +14,7 @@ const Header = () => {
   const handleLogOut = async () => {
     localStorage.removeItem("token");
     dispatch({
-      type: "User/logOut",
+      type: "user/logOut",
     });
     navigate("/");
   };
