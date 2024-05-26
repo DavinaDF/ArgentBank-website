@@ -1,0 +1,28 @@
+.edit-form {
+  box-sizing: border-box;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  margin: 30px auto;
+  padding: 1rem;
+}
+.edit-form .edit-input-wrapper {
+  display: flex;
+  justify-content: end;
+  width: 380px;
+  gap: 20px;
+  padding: 10px;
+}
+.edit-form .edit-input-wrapper input:disabled {
+  cursor: not-allowed;
+  background-color: rgb(133, 131, 131);
+  color: #303030;
+}
+.edit-form .buttons {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}/*# sourceMappingURL=edit.css.map */

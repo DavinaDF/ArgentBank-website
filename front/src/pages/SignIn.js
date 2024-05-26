@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { logInUser, getUserProfile } from "../fetch/api";
+import { getUserProfile } from "../fetch/api";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { logIn } from "../redux/userSlice";
+import { logIn, getProfile } from "../redux/userSlice";
 
 const SignIn = () => {
   // Variables du formulaire
@@ -18,16 +18,32 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const userLogged = useSelector((state) => state.user);
 
-  // if (userLogged.isAuthentificated) {
-  // if (remenberMe) {
-  //   localStorage.setItem("token", userLogged.token);
-  // }
-  //   dispatch(getProfile())
-  //   navigate("/dashboard")
-  // }
-
   const handleLogin = () => {
     dispatch(logIn({ email, password }));
+    console.log("Sing in ok, dispatch effectué");
+    console.log(userLogged);
+    // handleUserProfile();
+
+    if (!userLogged.requestError) {
+      if (userLogged.isAuthentificated) {
+        if (remenberMe) {
+          localStorage.setItem("token", userLogged.token);
+        }
+        const userDataProfile = getUserProfile(userLogged.token);
+        const userProfile = {};
+        userProfile.userFirstName = userDataProfile.body.firstName;
+        userProfile.userLastName = userDataProfile.body.lastName;
+        userProfile.userName = userDataProfile.body.userName;
+        console.log(userProfile);
+        dispatch({
+          type: "user/getProfile",
+          payload: userProfile,
+        });
+        navigate("/dashboard");
+      }
+    } else {
+      setError(userLogged.requestError);
+    }
 
     // // Récupération des infos de l'utilisateur
     // const userDataProfile = await getUserProfile(userToken);
@@ -42,6 +58,11 @@ const SignIn = () => {
     // });
     // navigate("/dashboard");
   };
+
+  // const handleUserProfile = () => {
+  //   const userToken = userLogged.token;
+  //   dispatch(getProfile({ userToken }));
+  // };
 
   return (
     <div className="main main-signin">
