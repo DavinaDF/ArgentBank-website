@@ -1,15 +1,17 @@
 import AccountPreview from "../components/AccountPreview";
 import accounts from "../data/accounts.json";
-import { editUsername } from "../fetch/api";
 import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { updateUserName } from "../redux/userSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
   // Récupération du state
   const userData = useSelector((state) => state.user);
+  const userToken = userData.token;
+  const userName = userData.userProfile.userName;
   console.log(userData);
 
   // On met la liste des comptes dans un tableau
@@ -19,7 +21,7 @@ const Dashboard = () => {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
   // State champ formulaire
-  const [userNameEdited, setUserName] = useState(userData.userProfile.userName);
+  const [userNameEdited, setUserName] = useState(userName);
   const [error, setError] = useState("");
 
   // Apparition formulaire edit
@@ -32,17 +34,20 @@ const Dashboard = () => {
     setUserName(e.target.value);
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     setUserName(e.target.value);
 
     try {
-      const responseEditUserName = editUsername(userNameEdited, userData.token);
-      console.log(responseEditUserName);
-      dispatch({
-        type: "user/editProfile",
-        payload: userNameEdited,
-      });
+      await dispatch(updateUserName({ userNameEdited, userToken })).unwrap();
       handleDisplayEditForm();
+
+      // const responseEditUserName = editUsername(userNameEdited, userData.token);
+      // console.log(responseEditUserName);
+      // dispatch({
+      //   type: "user/editProfile",
+      //   payload: userNameEdited,
+      // });
+      // handleDisplayEditForm();
     } catch (error) {
       setError("Votre pseudo n'a pas pu être modifié.");
     }
@@ -59,7 +64,7 @@ const Dashboard = () => {
         <h1>
           Welcome back
           <br />
-          {userData.userProfile.userName}
+          {userName}
         </h1>
         <button className="edit-button" onClick={handleDisplayEditForm}>
           Edit Name
@@ -75,7 +80,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="userName"
-                // value={userNameEdited}
+                value={userNameEdited}
                 onChange={(e) => {
                   e.preventDefault();
                   handleChange(e);
@@ -88,7 +93,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="firstName"
-                // value={userData.userProfile.userFirstName}
+                value={userData.userProfile.userFirstName}
                 disabled
               />
             </div>
@@ -97,7 +102,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="lastName"
-                // value={userData.userProfile.userLastName}
+                value={userData.userProfile.userLastName}
                 disabled
               />
             </div>

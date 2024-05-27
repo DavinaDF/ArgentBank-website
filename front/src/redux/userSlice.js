@@ -52,9 +52,35 @@ export const getProfile = createAsyncThunk(
   }
 );
 
-// const updateUserName = createAsyncThunk(
+// Action asynchrone pour modifier le surnom de l'utilisateur
+export const updateUserName = createAsyncThunk(
+  "user/updateUserName",
+  async ({ userNameEdited, userToken }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName: userNameEdited }),
+        }
+      );
 
-// );
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message);
+      }
+
+      const data = await response.json();
+      return data.body;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // Création d'une section du store liée aux users
 const userSlice = createSlice({
@@ -102,6 +128,13 @@ const userSlice = createSlice({
     });
     builder.addCase(getProfile.rejected, (state, { payload }) => {
       state.error = payload || "Erreur lors de la récupération du profil.";
+    });
+    builder.addCase(updateUserName.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.userProfile.userName = payload.userName;
+    });
+    builder.addCase(updateUserName.rejected, (state, { payload }) => {
+      state.error = payload || "Erreur lors de la modification du profil.";
     });
   },
 });
