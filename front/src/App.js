@@ -9,8 +9,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = useSelector((state) => state.user);
-
   return (
     <BrowserRouter>
       <div className="body">
