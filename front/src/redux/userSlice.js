@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+// Action pour connexion utilisateur
 export const logIn = createAsyncThunk(
   "user/logIn",
   async ({ email, password }, { rejectWithValue }) => {
@@ -104,12 +105,6 @@ const userSlice = createSlice({
       state.userProfile.userLastName = null;
       state.userProfile.userName = null;
     },
-    // getProfile: (state, action) => {
-    //   state.userProfile = action.payload;
-    // },
-    // editProfile: (state, action) => {
-    //   state.userProfile.userName = action.payload;
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(logIn.fulfilled, (state, { payload }) => {
@@ -118,7 +113,7 @@ const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(logIn.rejected, (state) => {
-      state.error = "Les identifiants sont incorrects.";
+      state.error = "////Les identifiants sont incorrects.";
     });
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       console.log(payload);
@@ -134,12 +129,12 @@ const userSlice = createSlice({
       state.userProfile.userName = payload.userName;
     });
     builder.addCase(updateUserName.rejected, (state, { payload }) => {
-      state.error = payload || "Erreur lors de la modification du profil.";
+      state.error = payload || "Erreur lors de la modification du profil. !!!!";
     });
   },
 });
 
-// Extraire et exporter chaque action
+// Extraire et exporter l'action de déconnexion
 export const { logOut } = userSlice.actions;
 
 export default userSlice;

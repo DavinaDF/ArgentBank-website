@@ -27,37 +27,12 @@ const SignIn = () => {
     }
   }, [userLogged, remenberMe, navigate, dispatch]);
 
-  // if (userLogged.isAuthentificated) {
-  // if (remenberMe) {
-  //   localStorage.setItem("token", userLogged.token);
-  // }
-  //   dispatch(getProfile())
-  //   navigate("/dashboard")
-  // }
-
   const handleLogin = async () => {
     try {
       await dispatch(logIn({ email, password })).unwrap();
-      console.log("Sign in ok, dispatch effectué");
     } catch (err) {
       setError(err);
     }
-
-    // dispatch(logIn({ email, password }));
-    // console.log(userLogged);
-
-    // // Récupération des infos de l'utilisateur
-    // const userDataProfile = await getUserProfile(userToken);
-    // const userProfile = {};
-    // userProfile.userFirstName = userDataProfile.body.firstName;
-    // userProfile.userLastName = userDataProfile.body.lastName;
-    // userProfile.userName = userDataProfile.body.userName;
-    // console.log(userProfile);
-    // dispatch({
-    //   type: "user/getProfile",
-    //   payload: userProfile,
-    // });
-    // navigate("/dashboard");
   };
 
   return (

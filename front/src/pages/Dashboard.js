@@ -1,6 +1,6 @@
 import AccountPreview from "../components/AccountPreview";
 import accounts from "../data/accounts.json";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserName } from "../redux/userSlice";
@@ -12,24 +12,30 @@ const Dashboard = () => {
   const userData = useSelector((state) => state.user);
   const userToken = userData.token;
   const userName = userData.userProfile.userName;
-  console.log(userData);
 
   // On met la liste des comptes dans un tableau
   const listAccount = accounts.accounts;
 
-  // Pour faire apparaître le formulaire
+  // Variables pour animer le formulaire edit
   const [headerVisible, setHeaderVisible] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
   // State champ formulaire
   const [userNameEdited, setUserName] = useState(userName);
   const [error, setError] = useState("");
 
+  // Synchroniser userNameEdited avec userName
+  useEffect(() => {
+    setUserName(userName);
+  }, [userName]);
+
   // Apparition formulaire edit
   const handleDisplayEditForm = () => {
+    setUserName(userName);
     setFormVisible(!formVisible);
     setHeaderVisible(!headerVisible);
   };
 
+  // Mise à jour du state
   const handleChange = (e) => {
     setUserName(e.target.value);
   };
@@ -40,14 +46,6 @@ const Dashboard = () => {
     try {
       await dispatch(updateUserName({ userNameEdited, userToken })).unwrap();
       handleDisplayEditForm();
-
-      // const responseEditUserName = editUsername(userNameEdited, userData.token);
-      // console.log(responseEditUserName);
-      // dispatch({
-      //   type: "user/editProfile",
-      //   payload: userNameEdited,
-      // });
-      // handleDisplayEditForm();
     } catch (error) {
       setError("Votre pseudo n'a pas pu être modifié.");
     }
@@ -80,7 +78,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="userName"
-                value={userNameEdited}
+                value={userNameEdited ?? ""}
                 onChange={(e) => {
                   e.preventDefault();
                   handleChange(e);
@@ -93,7 +91,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="firstName"
-                value={userData.userProfile.userFirstName}
+                value={userData.userProfile.userFirstName ?? ""}
                 disabled
               />
             </div>
@@ -102,7 +100,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="lastName"
-                value={userData.userProfile.userLastName}
+                value={userData.userProfile.userLastName ?? ""}
                 disabled
               />
             </div>
