@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { logInUser, getUserProfile } from "../fetch/api";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +17,16 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const userLogged = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (userLogged.isAuthentificated) {
+      if (remenberMe) {
+        localStorage.setItem("token", userLogged.token);
+      }
+      // dispatch(getProfile(userLogged.token));
+      navigate("/dashboard");
+    }
+  }, [userLogged, remenberMe, navigate, dispatch]);
+
   // if (userLogged.isAuthentificated) {
   // if (remenberMe) {
   //   localStorage.setItem("token", userLogged.token);
@@ -26,8 +35,16 @@ const SignIn = () => {
   //   navigate("/dashboard")
   // }
 
-  const handleLogin = () => {
-    dispatch(logIn({ email, password }));
+  const handleLogin = async () => {
+    try {
+      await dispatch(logIn({ email, password })).unwrap();
+      console.log("Sign in ok, dispatch effectué");
+    } catch (err) {
+      setError(err);
+    }
+
+    // dispatch(logIn({ email, password }));
+    // console.log(userLogged);
 
     // // Récupération des infos de l'utilisateur
     // const userDataProfile = await getUserProfile(userToken);
