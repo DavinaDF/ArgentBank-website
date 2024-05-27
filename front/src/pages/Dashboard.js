@@ -75,7 +75,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="userName"
-                value={userNameEdited}
+                // value={userNameEdited}
                 onChange={(e) => {
                   e.preventDefault();
                   handleChange(e);
@@ -88,7 +88,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="firstName"
-                value={userData.userProfile.userFirstName}
+                // value={userData.userProfile.userFirstName}
                 disabled
               />
             </div>
@@ -97,7 +97,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 id="lastName"
-                value={userData.userProfile.userLastName}
+                // value={userData.userProfile.userLastName}
                 disabled
               />
             </div>
