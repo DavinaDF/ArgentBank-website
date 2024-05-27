@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/img/argentBankLogo.png";
+import { logOut } from "../redux/userSlice";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -13,9 +14,7 @@ const Header = () => {
 
   const handleLogOut = async () => {
     localStorage.removeItem("token");
-    dispatch({
-      type: "user/logOut",
-    });
+    dispatch(logOut());
     navigate("/");
   };
 

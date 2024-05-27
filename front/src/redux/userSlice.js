@@ -116,7 +116,6 @@ const userSlice = createSlice({
       state.error = "Les identifiants sont incorrects.";
     });
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.userProfile.userFirstName = payload.firstName;
       state.userProfile.userLastName = payload.lastName;
       state.userProfile.userName = payload.userName;
@@ -125,7 +124,6 @@ const userSlice = createSlice({
       state.error = payload || "Erreur lors de la récupération du profil.";
     });
     builder.addCase(updateUserName.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.userProfile.userName = payload.userName;
     });
     builder.addCase(updateUserName.rejected, (state, { payload }) => {
