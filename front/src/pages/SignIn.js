@@ -22,7 +22,13 @@ const SignIn = () => {
       if (remenberMe) {
         localStorage.setItem("token", userLogged.token);
       }
-      dispatch(getProfile(userLogged.token));
+
+      try {
+        dispatch(getProfile(userLogged.token));
+      } catch (err) {
+        setError(userLogged.error);
+      }
+
       navigate("/dashboard");
     }
   }, [userLogged, remenberMe, navigate, dispatch]);
@@ -31,7 +37,7 @@ const SignIn = () => {
     try {
       await dispatch(logIn({ email, password })).unwrap();
     } catch (err) {
-      setError(err);
+      setError(userLogged.error);
     }
   };
 

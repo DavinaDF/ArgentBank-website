@@ -46,8 +46,8 @@ const Dashboard = () => {
     try {
       await dispatch(updateUserName({ userNameEdited, userToken })).unwrap();
       handleDisplayEditForm();
-    } catch (error) {
-      setError("Votre pseudo n'a pas pu être modifié.");
+    } catch (err) {
+      setError(userData.error);
     }
   };
 
