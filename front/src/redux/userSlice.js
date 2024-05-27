@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const logIn = createAsyncThunk(
   "user/logIn",
-  async ({ email, password }, { rejectWithValue, fulfillWithValue }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await fetch("http://localhost:3001/api/v1/user/login", {
         method: "POST",
@@ -13,21 +13,21 @@ export const logIn = createAsyncThunk(
       });
 
       if (!response.ok) {
-        return rejectWithValue(response.status);
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message);
       }
       const data = await response.json();
-      return fulfillWithValue(data.body);
+      return data.body;
     } catch (error) {
-      console.log(error.message);
-      throw rejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
 
+// Action asynchrone pour obtenir le profil utilisateur
 export const getProfile = createAsyncThunk(
   "user/getProfile",
-  async ({ userToken }, { rejectWithValue, fulfillWithValue }) => {
-    console.log({ userToken });
+  async (userToken, { rejectWithValue }) => {
     try {
       const response = await fetch(
         "http://localhost:3001/api/v1/user/profile",
@@ -44,12 +44,10 @@ export const getProfile = createAsyncThunk(
         return rejectWithValue(errorData.message);
       }
 
-      const data = response.json();
-      console.log(data);
-      console.log(data.body);
-      return fulfillWithValue(data.body);
+      const data = await response.json();
+      return data.body;
     } catch (error) {
-      throw rejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -101,6 +99,9 @@ const userSlice = createSlice({
       state.userProfile.userFirstName = payload.firstName;
       state.userProfile.userLastName = payload.lastName;
       state.userProfile.userName = payload.userName;
+    });
+    builder.addCase(getProfile.rejected, (state, { payload }) => {
+      state.error = payload || "Erreur lors de la récupération du profil.";
     });
   },
 });

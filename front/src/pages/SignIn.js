@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { logIn } from "../redux/userSlice";
+import { logIn, getProfile } from "../redux/userSlice";
 
 const SignIn = () => {
   // Variables du formulaire
@@ -22,7 +22,7 @@ const SignIn = () => {
       if (remenberMe) {
         localStorage.setItem("token", userLogged.token);
       }
-      // dispatch(getProfile(userLogged.token));
+      dispatch(getProfile(userLogged.token));
       navigate("/dashboard");
     }
   }, [userLogged, remenberMe, navigate, dispatch]);
