@@ -10,7 +10,6 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remenberMe, setRemenberMe] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   // State redux
@@ -23,22 +22,13 @@ const SignIn = () => {
         localStorage.setItem("token", userLogged.token);
       }
 
-      try {
-        dispatch(getProfile(userLogged.token));
-      } catch (err) {
-        setError(userLogged.error);
-      }
-
+      dispatch(getProfile(userLogged.token));
       navigate("/dashboard");
     }
   }, [userLogged, remenberMe, navigate, dispatch]);
 
-  const handleLogin = async () => {
-    try {
-      await dispatch(logIn({ email, password })).unwrap();
-    } catch (err) {
-      setError(userLogged.error);
-    }
+  const handleLogin = () => {
+    dispatch(logIn({ email, password }));
   };
 
   return (
@@ -52,7 +42,9 @@ const SignIn = () => {
             handleLogin();
           }}
         >
-          {error && <p className="error">{error}</p>}
+          {userLogged.requestError && (
+            <p className="error">{userLogged.requestError}</p>
+          )}
           <div className="input-wrapper">
             <label>
               Email

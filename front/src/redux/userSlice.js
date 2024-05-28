@@ -110,10 +110,10 @@ const userSlice = createSlice({
     builder.addCase(logIn.fulfilled, (state, { payload }) => {
       state.isAuthentificated = true;
       state.token = payload.token;
-      state.error = null;
+      state.requestError = null;
     });
     builder.addCase(logIn.rejected, (state) => {
-      state.error = "Les identifiants sont incorrects.";
+      state.requestError = "Les identifiants sont incorrects.";
     });
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       state.userProfile.userFirstName = payload.firstName;
@@ -121,13 +121,15 @@ const userSlice = createSlice({
       state.userProfile.userName = payload.userName;
     });
     builder.addCase(getProfile.rejected, (state, { payload }) => {
-      state.error = payload || "Erreur lors de la récupération du profil.";
+      state.requestError =
+        payload || "Erreur lors de la récupération du profil.";
     });
     builder.addCase(updateUserName.fulfilled, (state, { payload }) => {
       state.userProfile.userName = payload.userName;
     });
     builder.addCase(updateUserName.rejected, (state, { payload }) => {
-      state.error = payload || "Erreur lors de la modification du profil.";
+      state.requestError =
+        payload || "Erreur lors de la modification du profil.";
     });
   },
 });

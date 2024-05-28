@@ -21,7 +21,6 @@ const Dashboard = () => {
   const [formVisible, setFormVisible] = useState(false);
   // State champ formulaire
   const [userNameEdited, setUserName] = useState(userName);
-  const [error, setError] = useState("");
 
   // Synchroniser userNameEdited avec userName
   useEffect(() => {
@@ -40,15 +39,10 @@ const Dashboard = () => {
     setUserName(e.target.value);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = (e) => {
     setUserName(e.target.value);
-
-    try {
-      await dispatch(updateUserName({ userNameEdited, userToken })).unwrap();
-      handleDisplayEditForm();
-    } catch (err) {
-      setError(userData.error);
-    }
+    dispatch(updateUserName({ userNameEdited, userToken }));
+    handleDisplayEditForm();
   };
 
   const handleCancel = () => {
@@ -72,7 +66,9 @@ const Dashboard = () => {
         <section className="edit-form">
           <h1>Edit user info</h1>
           <form>
-            {error && <p className="error">{error}</p>}
+            {userData.requestError && (
+              <p className="error">{userData.requestError}</p>
+            )}
             <div className="edit-input-wrapper">
               <label>User name:</label>
               <input
