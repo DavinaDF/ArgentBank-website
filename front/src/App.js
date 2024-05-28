@@ -6,8 +6,6 @@ import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 
-import { useSelector } from "react-redux";
-
 const App = () => {
   return (
     <BrowserRouter>
