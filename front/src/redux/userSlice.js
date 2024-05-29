@@ -100,7 +100,7 @@ const userSlice = createSlice({
     logOut: (state) => {
       state.isAuthentificated = false;
       state.token = null;
-      state.error = null;
+      state.requestError = null;
       state.userProfile.userFirstName = null;
       state.userProfile.userLastName = null;
       state.userProfile.userName = null;
@@ -119,6 +119,7 @@ const userSlice = createSlice({
       state.userProfile.userFirstName = payload.firstName;
       state.userProfile.userLastName = payload.lastName;
       state.userProfile.userName = payload.userName;
+      state.requestError = null;
     });
     builder.addCase(getProfile.rejected, (state, { payload }) => {
       state.requestError =
@@ -126,6 +127,7 @@ const userSlice = createSlice({
     });
     builder.addCase(updateUserName.fulfilled, (state, { payload }) => {
       state.userProfile.userName = payload.userName;
+      state.requestError = null;
     });
     builder.addCase(updateUserName.rejected, (state, { payload }) => {
       state.requestError =

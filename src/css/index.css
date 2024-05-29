@@ -128,19 +128,19 @@ a {
   height: max-content;
 }
 .header-dashboard.hide {
+  opacity: 0;
   z-index: -10;
   transform: translateY(20px);
-  opacity: 0;
   height: 0;
-  transition: all 0.8s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .edit-content {
+  opacity: 0;
   z-index: -10;
   transform: translateY(-20px);
-  opacity: 0;
   height: 0;
-  transition: all 0.6s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 .edit-content.show {
   z-index: 1;

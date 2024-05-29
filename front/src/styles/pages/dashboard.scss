@@ -9,6 +9,10 @@
   height: -moz-max-content;
   height: max-content;
 
+  h1 {
+    color: #fff;
+  }
+
   &.hide {
     opacity: 0;
     z-index: -10;
